@@ -9,23 +9,11 @@
 namespace vast {
 
 template <>
-struct access::state<chunk::meta_data> {
-  template <typename T, typename F>
-  static void call(T&& x, F f) {
-    f(x.first, x.last, x.ids, x.schema);
-  }
-};
-
-template <>
 struct access::state<chunk> {
   template <typename T, typename F>
-  static void read(T const& x, F f) {
-    f(x.meta(), x.block());
-  }
-
-  template <typename T, typename F>
-  static void write(T& x, F f) {
-    f(x.get_meta(), x.block());
+  static void call(T&& x, F f) {
+    f(x.events_, x.first_, x.last_, x.ids_, x.schema_, x.compression_method_,
+      x.buffer_);
   }
 };
 
